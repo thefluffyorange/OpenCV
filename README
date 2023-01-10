@@ -1,0 +1,3 @@
+This is a project to design an autonomous obstacle detection system for a bicycle. It is the subject of a 3rd year university individual project.
+
+The idea is to utilise a laser grid projected infront of the rider, which is monitored by a camera. Then if an object enters this grid it will deform which will then be recognised by the camera sending an alert to the rider.
