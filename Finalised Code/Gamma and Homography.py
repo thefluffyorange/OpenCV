@@ -90,7 +90,7 @@ if __name__ == '__main__':
     """
 
     # enter the location of the file/image you want to import
-    img_location = 'Finalised Code/Input Files/grid_simulation.png'
+    img_location = 'Archive of images/Test.png'
 
     # check to see if the image has loaded correctly and got the right file path
     check_empty_img(img_location)

@@ -6,8 +6,8 @@ import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
 # img = cv.imread('Archive of images/rock.png', 0)
-img = cv.imread('Finalised Code/Input Files/reference_photo.png', 0)
-ret, thresh1 = cv.threshold(img, 127, 255, cv.THRESH_BINARY)
+img = cv.imread('Archive of images/Test.png', 0)
+ret, thresh1 = cv.threshold(img, 75, 255, cv.THRESH_BINARY)
 ret, thresh2 = cv.threshold(img, 127, 255, cv.THRESH_BINARY_INV)
 ret, thresh3 = cv.threshold(img, 127, 255, cv.THRESH_TRUNC)
 ret, thresh4 = cv.threshold(img, 127, 255, cv.THRESH_TOZERO)
