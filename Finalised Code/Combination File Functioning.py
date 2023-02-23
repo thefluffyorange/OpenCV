@@ -167,7 +167,7 @@ if __name__ == '__main__':
     # imports the image and creates 3 distinct versions, set to 1 or 0 depending on if you want to view greyscale image for gamma adjustment
     original, greyscale, RGB_Image = import_image(
         1, "Archive of images/Test.png")
-    gammaValue = 2  # set the gamma value based on the above grey scale image
+    gammaValue = 1  # set the gamma value based on the above grey scale image
 
     """
     This section opens the image using matplotlib, so the you can select the 4 corners of the grid
@@ -210,11 +210,3 @@ if __name__ == '__main__':
 
     cv2.imwrite('Finalised Code/Output Files/corrected_grid.png',
                 out)  # outputs the transformed grid
-
-    ret, thresh1 = cv2.threshold(out, 75, 255, cv2.THRESH_BINARY)
-    edges = cv2.Canny(thresh1, 0, 150)
-    plt.subplot(121), plt.imshow(out, cmap='gray')
-    plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-    plt.subplot(122), plt.imshow(edges, cmap='gray')
-    plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
-    plt.show()
