@@ -17,20 +17,24 @@ cap2.release()
  """
 
 
-def take_photo():
+def take_photo(input):
     """
     This function will utilise the paired camera to take a photo, if the variable viewImage is set as 1 then the image will be shown. If it is set as 0 then the image will be stored but not shown.
     """
     cap1 = cv2.VideoCapture(0)
+    ramp_frames = 30
+    for i in range(ramp_frames):
+        temp = cap1.read()
+
     ret, frame = cap1.read()
 
-    if viewImage == 1:
+    if input == 1:
         # displays the captured image
-        cv2.imshow('Image from camera', frame)
-        cv2.waitKey(0)
-        cv2.imwrite("Finalised Code/Output Files/Camera Image.png", frame)
+        #cv2.imshow('Image from camera', frame)
+        # cv2.waitKey(0)
+        cv2.imwrite("Archive of images/Report/1.png", frame)
         cv2.destroyAllWindows()
-    if viewImage == 0:
+    if input == 0:
         cv2.imwrite("Finalised Code/Output Files/Camera Image.png", frame)
         cv2.destroyAllWindows()
     else:
@@ -39,5 +43,5 @@ def take_photo():
 
 
 if __name__ == '__main__':
-    viewImage = 1
-    take_photo()
+    # viewImage = 1
+    take_photo(1)

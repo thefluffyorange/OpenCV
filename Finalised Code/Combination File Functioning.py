@@ -27,6 +27,9 @@ def take_photo(takePhoto, viewImage, device=0):
             # checks if the device was accessed correctly
             print('Warning: unable to open video source: ', device)
 
+        ramp_frames = 30
+        for i in range(ramp_frames):
+            temp = cap.read()
         ret, frame = cap.read()  # takes a photo
 
         if viewImage == True:
@@ -118,10 +121,10 @@ def adjust_gamma(image, gamma=1.0):
 
 def homography_transformation(original_image, input_pts):
     """
-    Expects the original, untransformed image and a list of 4 coordinates [A], [B], [C], [D] which it then unpacks and 
-    finds the maximum height between the top and bottom of the grid, as well as 
-    the maximum width between the left and right sides. Once these are calculated 
-    they become the outer coordinates for the new plot. Then the projective 
+    Expects the original, untransformed image and a list of 4 coordinates [A], [B], [C], [D] which it then unpacks and
+    finds the maximum height between the top and bottom of the grid, as well as
+    the maximum width between the left and right sides. Once these are calculated
+    they become the outer coordinates for the new plot. Then the projective
     transform matrix is calculated and returned.
     """
     pt_A, pt_B, pt_C, pt_D = input_pts
@@ -159,28 +162,28 @@ if __name__ == '__main__':
     This section is the image input and preliminary checks along with converting the image into
     greyscale for later and RGB to use in matplotlib
     """
-    outputImageLocation = "Finalised Code/Output Files/Camera_Image.png"  # set the output location of the camera
+    outputImageLocation = "Archive of images/Report/2.png"  # set the output location of the camera
 
     # utilises the camera to take and save a photo, set the value to true to see the camera, false to not
-    take_photo(False, False)
+    take_photo(True, False)
 
     # imports the image and creates 3 distinct versions, set to 1 or 0 depending on if you want to view greyscale image for gamma adjustment
     original, greyscale, RGB_Image = import_image(
-        1, "Archive of images/Test.png")
-    gammaValue = 1  # set the gamma value based on the above grey scale image
+        0, "Archive of images/Report/2.png")
+    gammaValue = 0.5  # set the gamma value based on the above grey scale image
 
     """
     This section opens the image using matplotlib, so the you can select the 4 corners of the grid
     and modify the gamma value to make it brighter or darker.
     """
     plt.imshow(RGB_Image)
-    plt.show()  # toggle this to display the matplotlib in order to find the coordinates
+    # plt.show()  # toggle this to display the matplotlib in order to find the coordinates
 
     # All points are in format[cols, rows]
-    bottom_left = [1038, 2514]
-    bottom_right = [2149, 2606]
-    top_right = [2328, 1912]
-    top_left = [1165, 1861]
+    bottom_left = [734, 924]
+    bottom_right = [1175, 931]
+    top_right = [1183, 456]
+    top_left = [748, 456]
 
     """
     This section now takes the inputs from above and applies a gamma correction and as well as the homography transform
@@ -189,24 +192,41 @@ if __name__ == '__main__':
     input_points = [bottom_left, bottom_right, top_right, top_left]
 
     # creates the gamma adjusted image
-    gamma_adjusted_img = adjust_gamma(greyscale, gammaValue)
+    gamma_adjusted_original = adjust_gamma(original, gammaValue)
+    gamma_adjusted_grey = adjust_gamma(greyscale, gammaValue)
 
-    out = homography_transformation(gamma_adjusted_img, input_points)
+    # out = homography_transformation(gamma_adjusted_img, input_points)
+    corrected_original = homography_transformation(original, input_points)
+    corrected_greyscale_gamma = homography_transformation(
+        gamma_adjusted_grey, input_points)
 
     """
     Below is outputting the images for user viewing as well as saving them to the folder
     """
-
-    cv2.putText(gamma_adjusted_img, "g={}".format(gammaValue), (10, 70),
-                cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 3)  # adds some formatting to the gamma modified image
+    """
+    cv2.putText(gamma_adjusted_grey, "g={}".format(gammaValue), (10, 70),
+        cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 3)  # adds some formatting to the gamma modified image
     cv2.imshow('adjusted', np.vstack(
-        [greyscale, gamma_adjusted_img]))  # displays the gamma transformed image
+        [greyscale, gamma_adjusted_grey]))  # displays the gamma transformed image
+        """
 
     # displays the corrected grid from a birds eye view
-    cv2.imshow('corrected_grid', out)
+    # cv2.imshow('corrected_grid', corrected_greyscale_gamma)
     # waits for an input from the keyboard to signify user has finished analysing the images
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()  # destroys all of the plots ready for a new runthrough
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()  # destroys all of the plots ready for a new runthrough
 
-    cv2.imwrite('Finalised Code/Output Files/corrected_grid.png',
-                out)  # outputs the transformed grid
+    # outputs gamma corrected image (original colours)
+    cv2.imwrite('Archive of images/Report/gamma original.png',
+                gamma_adjusted_original)
+    # outputs gamma corrected image (original colours)
+    cv2.imwrite('Archive of images/Report/gamma greyscale.png',
+                gamma_adjusted_grey)
+    cv2.imwrite('Archive of images/Report/original.png',
+                original)  # outputs original image
+    cv2.imwrite('Archive of images/Report/greyscale.png',
+                greyscale)  # outputs greyscale image
+    cv2.imwrite('Archive of images/Report/corrected original.png',
+                corrected_original)  # outputs the transformed grid in original colours
+    cv2.imwrite('Archive of images/Report/corrected greyscale gamma.png',
+                corrected_greyscale_gamma)  # outputs the transformed grid in greyscale with gamma correction

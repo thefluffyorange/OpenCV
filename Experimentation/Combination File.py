@@ -162,11 +162,11 @@ if __name__ == '__main__':
     outputImageLocation = "Finalised Code/Output Files/Camera_Image.png"  # set the output location of the camera
 
     # utilises the camera to take and save a photo, set the value to true to see the camera, false to not
-    take_photo(False, False)
+    take_photo(True, True)
 
     # imports the image and creates 3 distinct versions, set to 1 or 0 depending on if you want to view greyscale image for gamma adjustment
     original, greyscale, RGB_Image = import_image(
-        1, "Archive of images/Test.png")
+        0, "Finalised Code/Output Files/Camera_Image.png")
     gammaValue = 2  # set the gamma value based on the above grey scale image
 
     """
@@ -174,7 +174,7 @@ if __name__ == '__main__':
     and modify the gamma value to make it brighter or darker.
     """
     plt.imshow(RGB_Image)
-    plt.show()  # toggle this to display the matplotlib in order to find the coordinates
+    # plt.show()  # toggle this to display the matplotlib in order to find the coordinates
 
     # All points are in format[cols, rows]
     bottom_left = [1038, 2514]
@@ -199,10 +199,12 @@ if __name__ == '__main__':
 
     cv2.putText(gamma_adjusted_img, "g={}".format(gammaValue), (10, 70),
                 cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 3)  # adds some formatting to the gamma modified image
-    cv2.imshow('adjusted', np.vstack(
+    cv2.imshow('adjusted', np.hstack(
         [greyscale, gamma_adjusted_img]))  # displays the gamma transformed image
+    cv2.waitKey()
+    cv2.destroyAllWindows()
 
-    # displays the corrected grid from a birds eye view
+    """ # displays the corrected grid from a birds eye view
     cv2.imshow('corrected_grid', out)
     # waits for an input from the keyboard to signify user has finished analysing the images
     cv2.waitKey(0)
@@ -217,4 +219,4 @@ if __name__ == '__main__':
     plt.title('Original Image'), plt.xticks([]), plt.yticks([])
     plt.subplot(122), plt.imshow(edges, cmap='gray')
     plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
-    plt.show()
+    plt.show() """
