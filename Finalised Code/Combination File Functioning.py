@@ -170,7 +170,7 @@ if __name__ == '__main__':
     # imports the image and creates 3 distinct versions, set to 1 or 0 depending on if you want to view greyscale image for gamma adjustment
     original, greyscale, RGB_Image = import_image(
         0, "Archive of images/Report/2.png")
-    gammaValue = 0.5  # set the gamma value based on the above grey scale image
+    gammaValue = 1.5  # set the gamma value based on the above grey scale image
 
     """
     This section opens the image using matplotlib, so the you can select the 4 corners of the grid
@@ -180,10 +180,10 @@ if __name__ == '__main__':
     # plt.show()  # toggle this to display the matplotlib in order to find the coordinates
 
     # All points are in format[cols, rows]
-    bottom_left = [734, 924]
-    bottom_right = [1175, 931]
-    top_right = [1183, 456]
-    top_left = [748, 456]
+    bottom_left = [700, 665]
+    bottom_right = [1118, 662]
+    top_right = [1145, 189]
+    top_left = [695, 188]
 
     """
     This section now takes the inputs from above and applies a gamma correction and as well as the homography transform
